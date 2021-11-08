@@ -1,20 +1,15 @@
+#!/usr/bin/env python
+
 import asyncio
+import os
+
 import websockets
-import time
 
-async def handle_websocket(websocket, path):
-    print(path)
+async def echo(websocket, path):
     async for message in websocket:
-        f = open('duration.txt', 'r')
-        for i in f:
-            await websocket.send(message)
-            await websocket.send("StartRec")
-            time.sleep(int(i))
-            await websocket.send("StopRec")
-            
+        await websocket.send(message)
 
-async def main():
-    async with websockets.serve(handle_websocket, port=3000): #"127.0.0.1", 3000):
-        await asyncio.Future()  # run forever
+start_server = websockets.serve(echo, "", int(3000))
 
-asyncio.run(main())
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
