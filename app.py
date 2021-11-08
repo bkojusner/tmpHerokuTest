@@ -2,12 +2,15 @@
 
 import asyncio
 import os
-
+import time
 import websockets
 
 async def echo(websocket, path):
     async for message in websocket:
         await websocket.send(message)
+        await websocket.send("StartRec")
+        time.sleep(int(i))
+        await websocket.send("StopRec")
 
 start_server = websockets.serve(echo, "", int(os.environ["PORT"]))
 
