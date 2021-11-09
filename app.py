@@ -19,7 +19,7 @@ async def echo(websocket, path):
             print("stopping")
             await websocket.send("StopRec")
 
-start_server = websockets.serve(echo, "", 3000)#int(os.environ["PORT"]))
+start_server = websockets.serve(echo, "", int(os.environ["PORT"]))
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
