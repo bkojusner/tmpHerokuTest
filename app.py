@@ -4,9 +4,7 @@ import asyncio
 import os
 import time
 import websockets
-from ratelimit import limits
 
-@limits(calls=1, period=900)
 async def echo(websocket, path):
     async for message in websocket:
         # If message == from computer
