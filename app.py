@@ -23,7 +23,8 @@ async def echo(websocket, path):
         
         print("Should be done")
 
-start_server = websockets.serve(echo, "", 3000)
+# For testing purposes you can change that last int to just 3000
+start_server = websockets.serve(echo, "", int(os.environ["PORT"]))
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
