@@ -7,17 +7,23 @@ import websockets
 
 async def echo(websocket, path):
     async for message in websocket:
-        # If message == from computer
-        # Else do this
-        for i in range(1, 4):
-            await websocket.send(message)
-            print("starting")
+        f = open("data.txt", 'r')
+        
+        # Establish connection with phone second
+        print(message)
+        # Start recording the audio files
+        for i in f:
+            print("Start Recording for {} seconds".format(str(i)))
             await websocket.send("StartRec")
-            await asyncio.sleep(i)
-            print("stopping")
+            await asyncio.sleep(int(i))
             await websocket.send("StopRec")
+            print("Stopped recording")
+            print("Pausing everything for 5 seconds to sync up")
+            await asyncio.sleep(5)
+        
+        print("Should be done")
 
-start_server = websockets.serve(echo, "", int(os.environ["PORT"]))
+start_server = websockets.serve(echo, "", 3000)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
